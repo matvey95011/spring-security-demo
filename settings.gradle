@@ -1,0 +1,5 @@
+rootProject.name = 'spring-demo'
+include 'spring-security-demo'
+include 'reactive-spring-security-demo'
+include 'spring-aop-demo'
+

@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group = 'ru.example.java.spring'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-aop"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:4.0.3"
+    implementation "org.apache.commons:commons-collections4:$commonsCollections4Version"
+    implementation "org.apache.commons:commons-text:$commonsTextVersion"
+    implementation "org.jetbrains:annotations:$jetbrainsAnnotationsVersion"
+    implementation "joda-time:joda-time:$jodaTimeVersion"
+
+    implementation "ru.example.java.spring.demo:demo-api:1.0.0-SNAPSHOT" transitive false
+
+    implementation "org.projectlombok:lombok:$lombokVersion"
+    compileOnly('org.projectlombok:lombok')
+    annotationProcessor "org.projectlombok:lombok"
+
+}
+
+test {
+    useJUnitPlatform()
+}

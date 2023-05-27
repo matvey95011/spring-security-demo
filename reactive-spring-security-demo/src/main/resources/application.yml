@@ -1,0 +1,30 @@
+server:
+  port: 8888
+
+spring:
+  cloud:
+    server-auth:
+      url: http://localhost8888
+  r2dbc:
+    url: r2dbc:pool:postgres://localhost:5432/reactive-security
+    username: postgres
+    password: postgres
+  flyway:
+    url: jdbc:postgresql://localhost:5432/reactive-security
+#    locations: classpath:db/migration
+    user: postgres
+    password: postgres
+
+encoder-variable:
+  secret: GkiOiJjYTlkNjVlZS1hMWFjLTQ2NzItODQ0Mi1hNjI3YzM1ZjVmODkiLCJpYXQiOjE2ODUxMzkzMDgsImV4cCI6MTY4NTE0MjkwOH0
+  iteration: 64
+  keylength: 256
+  algorithm: PBEWithHmacSHA256AndAES_128
+
+security-variable:
+  secret: GkiOiJjYTlkNjVlZS1hMWFjLTQ2NzItODQ0Mi1hNjI3YzM1ZjVmODkiLCJpYXQiOjE2ODUxMzkzMDgsImV4cCI6MTY4NTE0MjkwOH0
+  expiration: 3600000
+  issuer: spring-demo
+  public-endpoints:
+    - "/api/v1/registration"
+    - "/api/v1/login"

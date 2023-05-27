@@ -1,0 +1,4 @@
+encoder-variable:
+  secret: secret-key
+  iteration: 64
+  keylength: 256
