@@ -1,0 +1,86 @@
+plugins {
+    id 'java'
+    id "org.openapi.generator" version "6.0.1"
+}
+
+dependencies {
+    implementation dep.swagger
+    implementation dep.springWeb
+    implementation dep.utils
+    implementation dep.springDataCommons
+    implementation dep.springOpenFeignCore
+
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+
+//    implementation "io.swagger:swagger-annotations:$swaggerCoreVersion"
+//    implementation "io.swagger.core.v3:swagger-annotations:$swaggerAnnotationsVersion"
+//    implementation "org.openapitools:jackson-databind-nullable:$jacksonDatabindNullableVersion"
+//    implementation "javax.validation:validation-api:$validationApiVersion"
+//    implementation "org.springdoc:springdoc-openapi-ui:$springdocOpenapiUiVersion"
+//    implementation "com.fasterxml.jackson.core:jackson-annotations"
+//    implementation "com.fasterxml.jackson.core:jackson-databind"
+//
+//    implementation "org.springframework.boot:spring-boot-starter-web"
+//    implementation "org.springframework.boot:spring-boot-starter-test"
+//
+//    implementation "org.apache.commons:commons-collections4:$commonsCollections4Version"
+//    implementation "org.apache.commons:commons-text:$commonsTextVersion"
+//    implementation "org.jetbrains:annotations:$jetbrainsAnnotationsVersion"
+//    implementation "joda-time:joda-time:$jodaTimeVersion"
+//    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+//    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+//
+//
+//    implementation "org.springframework.data:spring-data-commons"
+//    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:$springCloudOpenfeignStarterVersion"
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir("$buildDir/generated/src/main/java")
+        }
+    }
+}
+
+tasks.bootJar {
+    enabled(false)
+}
+
+tasks.build {
+    dependsOn('clean','openApiGenerate')
+}
+
+openApiGenerate {
+    inputSpec = "$rootDir/spring-user-api-demo/src/main/resources/static/api-docs.yml".toString()
+    generatorName = "spring"
+    outputDir = "$buildDir/generated".toString()
+    apiPackage = "ru.example.java.spring.api"
+    modelPackage = "ru.example.java.spring.model"
+    generateApiTests = false
+    generateModelTests = false
+    typeMappings = [
+            "OffsetDateTime": "Instant"
+    ]
+    importMappings = [
+            "java.time.OffsetDateTime": "java.time.Instant"
+    ]
+    configOptions = [
+            sourceFolder           : "src/main/java/",
+            useTags                : "true",
+            java8                  : "false",
+            dateLibrary            : "java8",
+            hideGenerationTimestamp: "true",
+            serializableModel      : "true",
+            booleanGetterPrefix    : "is",
+            openApiNullable        : "true",
+            skipDefaultInterface   : "true",
+            interfaceOnly          : "true",
+            generateSupportingFiles: "false",
+            delegatePattern        : "false",
+            useBeanValidation      : "true",
+            serializableModel      : "true",
+            localVarPrefix         : "localVar"
+    ]
+}

@@ -1,5 +1,8 @@
-rootProject.name = 'spring-demo'
+rootProject.name = 'spring-security-demo'
 include 'spring-security-demo'
 include 'reactive-spring-security-demo'
 include 'spring-aop-demo'
+include 'spring-security-oauth2-authorization-server-demo'
+include 'spring-user-service-demo'
+include 'spring-user-api-demo'
 

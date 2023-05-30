@@ -1,0 +1,53 @@
+ext {
+    swaggerCoreVersion = '1.6.10'
+    swaggerAnnotationsVersion = '2.2.8'
+    jacksonDatabindNullableVersion = '0.2.2'
+    validationApiVersion = '2.0.1.Final'
+    springdocOpenapiUiVersion = '1.6.9'
+    commonsCollections4Version = '4.4'
+    commonsTextVersion = '1.6'
+    jetbrainsAnnotationsVersion = '23.0.0'
+    jodaTimeVersion = '2.12.2'
+    springCloudOpenfeignCoreVersion = '2.2.5.RELEASE'
+    mapstructVersion = '1.5.1.Final'
+    modelMapperVerion = '3.1.1'
+    springCloudOpenfeignStarterVersion = '3.1.2'
+
+    dep = [
+            swagger            : [
+                    "io.swagger:swagger-annotations:$swaggerCoreVersion",
+                    "io.swagger.core.v3:swagger-annotations:$swaggerAnnotationsVersion",
+                    "org.openapitools:jackson-databind-nullable:$jacksonDatabindNullableVersion",
+                    "javax.validation:validation-api:$validationApiVersion",
+                    "org.springdoc:springdoc-openapi-ui:$springdocOpenapiUiVersion",
+                    "com.fasterxml.jackson.core:jackson-annotations",
+                    "com.fasterxml.jackson.core:jackson-databind"
+            ],
+            springWeb          : [
+                    "org.springframework.boot:spring-boot-starter-web",
+                    "org.springframework.boot:spring-boot-starter-test"
+            ],
+            springReactive     : [
+                    "org.springframework.boot:spring-boot-starter-webflux",
+                    "io.projectreactor:reactor-test"
+            ],
+            utils              : [
+                    "org.apache.commons:commons-collections4:$commonsCollections4Version",
+                    "org.apache.commons:commons-text:$commonsTextVersion",
+                    "org.jetbrains:annotations:$jetbrainsAnnotationsVersion",
+                    "joda-time:joda-time:$jodaTimeVersion"
+            ],
+            mapStruct          : [
+                    "org.mapstruct:mapstruct:$mapstructVersion",
+                    "org.mapstruct:mapstruct-processor:$mapstructVersion"
+            ],
+            modelMapper        : "org.modelmapper:modelmapper:$modelMapperVerion",
+            springDataCommons  : "org.springframework.data:spring-data-commons",
+            springOpenFeignCore: "org.springframework.cloud:spring-cloud-openfeign-core:$springCloudOpenfeignCoreVersion",
+            springFeignClient  : "org.springframework.cloud:spring-cloud-starter-openfeign:$springCloudOpenfeignStarterVersion",
+            protobuf : [
+                    "com.google.protobuf:protoc:3.17.2",
+                    "io.grpc:protoc-gen-grpc-java:1.40.0"
+            ]
+    ]
+}

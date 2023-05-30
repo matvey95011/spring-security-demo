@@ -1,0 +1,8 @@
+server:
+  port: 8081
+
+spring:
+  security:
+    cors:
+      allowed-origins: http://127.0.0.1
+    redirectUrls: ${ALLOW_REDIRECT_URLS:http://127.0.0.1:5173/auth/callback}

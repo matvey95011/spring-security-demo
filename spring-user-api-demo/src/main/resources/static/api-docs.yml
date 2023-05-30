@@ -1,0 +1,307 @@
+openapi: 3.0.1
+info:
+  title: Rest API Application
+  description: User api
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: local
+
+paths:
+  /api/v1/user:
+    get:
+      tags:
+        - User
+      operationId: findAllUser
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
+        - name: filter
+          in: query
+          schema:
+            $ref: '#/components/schemas/FilterRequest'
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/PageUserResponse'
+    post:
+      tags:
+        - User
+      summary: Create or Update User
+      operationId: addUser
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        201:
+          description: CREATED
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+
+  /api/v1/user/{id}:
+    get:
+      tags:
+        - User
+      operationId: findUserById
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+    delete:
+      tags:
+        - User
+      operationId: deleteUser
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: OK
+  /api/v1/user/{username}:
+    get:
+      tags:
+        - User
+      operationId: findUserByUsername
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/AuthenticationUserResponse'
+
+components:
+  schemas:
+    FilterRequest:
+      allOf:
+        - $ref: "#/components/schemas/BaseFilter"
+        - type: object
+      properties:
+        userIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+        age:
+          type: integer
+          format: int32
+        createDateFrom:
+          type: string
+          format: date
+        createDateTo:
+          type: string
+          format: date
+
+    PageUserResponse:
+      allOf:
+        - $ref: "#/components/schemas/BasePage"
+        - type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponse'
+
+    AuthenticationUserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        accountNonExpired:
+          type: boolean
+        accountNonLocked:
+          type: boolean
+        credentialsNonExpired:
+          type: boolean
+        enabled:
+          type: boolean
+        status:
+          $ref: '#/components/schemas/Status'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+
+    Role:
+      type: string
+      enum:
+        - ADMIN
+        - MANAGER
+        - USER
+
+    Status:
+      type: string
+      enum:
+        - ACTIVE
+        - BLOCKED
+        - DELETED
+
+    UserRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+
+        #   <------------- Base DTO ------------->
+    BaseFilter:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          default: 10
+        pageNumber:
+          type: integer
+          default: 0
+        sort:
+          type: array
+          items:
+            type: string
+    BasePage:
+      type: object
+      properties:
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        number:
+          type: integer
+          format: int32
+        sort:
+          $ref: '#/components/schemas/Sort'
+        first:
+          type: boolean
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        numberOfElements:
+          type: integer
+          format: int32
+        last:
+          type: boolean
+        empty:
+          type: boolean
+    Sort:
+      type: object
+      properties:
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+        empty:
+          type: boolean
+    Pageable:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        sort:
+          $ref: '#/components/schemas/Sort'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
